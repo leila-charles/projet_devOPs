@@ -20,14 +20,12 @@
       --line: rgba(43,32,26,.12);
       --brand: #D4A574;
       --brand-dark: #B8936A;
-      --accent: #8B6F47;
-      --success: #10b981;
       --shadow: 0 18px 50px rgba(43,32,26,.12);
       --shadow-2: 0 22px 60px rgba(43,32,26,.16);
       --radius: 24px;
       --radius-sm: 16px;
       --container: 1200px;
-      --ring: 0 0 0 4px rgba(212,165,116,.28);
+      --ring: 0 0 0 4px rgba(212,165,116,.26);
     }
 
     *{ box-sizing: border-box; margin: 0; padding: 0; }
@@ -74,7 +72,7 @@
     .chip{
       display:inline-flex;
       align-items:center;
-      gap: 9px;
+      gap: 10px;
       padding: 8px 14px;
       border: 1px solid var(--line);
       border-radius: 999px;
@@ -89,31 +87,11 @@
       transform: translateY(-1px);
       box-shadow: 0 10px 20px rgba(43,32,26,.08);
     }
-    .dot{
+    .status-dot{
       width: 7px; height: 7px; border-radius: 99px;
-      background: var(--success);
+      background: #10b981;
       display:inline-block;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.55} }
-
-    .social{ display:flex; align-items:center; gap: 10px; }
-    .ico{
-      width: 34px; height: 34px;
-      display:grid; place-items:center;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255,255,255,.60);
-      cursor: pointer;
-      transition: transform .2s ease, background .2s ease, box-shadow .2s ease, color .2s ease;
-      font-size: 14px;
-      user-select: none;
-    }
-    .ico:hover{
-      background: var(--brand);
-      color: #fff;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 18px rgba(212,165,116,.35);
+      box-shadow: 0 0 0 4px rgba(16,185,129,.15);
     }
 
     /* Header */
@@ -300,6 +278,15 @@
       border: 1px solid rgba(212,165,116,.20);
       border-radius: 999px;
     }
+    .kicker::before{
+      content:"";
+      width: 10px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(184,147,106,.9);
+      display:inline-block;
+    }
+
     .hero h2{
       margin: 0 0 18px;
       font-size: clamp(40px, 5vw, 56px);
@@ -325,7 +312,7 @@
     .hero-meta{
       margin-top: 22px;
       display:flex;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
       color: var(--muted);
       font-size: 13px;
@@ -333,12 +320,19 @@
     .pill{
       display:inline-flex;
       align-items:center;
-      gap: 8px;
+      gap: 10px;
       padding: 10px 14px;
       border-radius: 999px;
       background: rgba(255,255,255,.62);
       border: 1px solid var(--line);
       box-shadow: 0 12px 26px rgba(43,32,26,.08);
+    }
+    .pill::before{
+      content:"";
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: rgba(184,147,106,.9);
+      display:inline-block;
     }
 
     /* Floating images */
@@ -353,13 +347,13 @@
     }
     .float-img:hover{ transform: rotate(0deg) scale(1.05) !important; }
     .float-img img{ width:100%; height:100%; object-fit: cover; }
-    .fi-1{ width: 260px; height: 190px; right: 84px; top: 54px; transform: rotate(7deg); animation: float 6s ease-in-out infinite; }
-    .fi-2{ width: 290px; height: 215px; right: 46px; bottom: 42px; transform: rotate(-8deg); animation: float 7s ease-in-out infinite 1s; }
-    .fi-3{ width: 210px; height: 160px; left: 54px; top: 96px; transform: rotate(-6deg); opacity:.96; animation: float 5s ease-in-out infinite 2s; }
+    .fi-1{ width: 260px; height: 190px; right: 84px; top: 54px; --rot: 7deg; transform: rotate(var(--rot)); animation: float 6s ease-in-out infinite; }
+    .fi-2{ width: 290px; height: 215px; right: 46px; bottom: 42px; --rot: -8deg; transform: rotate(var(--rot)); animation: float 7s ease-in-out infinite 1s; }
+    .fi-3{ width: 210px; height: 160px; left: 54px; top: 96px; --rot: -6deg; transform: rotate(var(--rot)); opacity:.96; animation: float 5s ease-in-out infinite 2s; }
 
     @keyframes float{
-      0%,100%{ transform: translateY(0) rotate(var(--rot, 0deg)); }
-      50%{ transform: translateY(-14px) rotate(var(--rot, 0deg)); }
+      0%,100%{ transform: translateY(0) rotate(var(--rot)); }
+      50%{ transform: translateY(-14px) rotate(var(--rot)); }
     }
 
     /* Sections */
@@ -370,8 +364,8 @@
     }
     .section-head .badge{
       display:inline-flex;
-      gap: 10px;
       align-items:center;
+      gap: 10px;
       margin-bottom: 14px;
       color: var(--brand-dark);
       font-weight: 900;
@@ -382,6 +376,14 @@
       background: rgba(212,165,116,.12);
       border: 1px solid rgba(212,165,116,.20);
       border-radius: 999px;
+    }
+    .section-head .badge::before{
+      content:"";
+      width: 18px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(184,147,106,.9);
+      display:inline-block;
     }
     .section-head h3{
       font-size: 38px;
@@ -453,7 +455,7 @@
       line-height: 1.7;
     }
 
-    /* About + Testimonials */
+    /* About + Reviews */
     .split{
       display:grid;
       grid-template-columns: 1.1fr .9fr;
@@ -488,12 +490,21 @@
     }
     .bullets div{
       display:flex;
-      gap: 10px;
+      gap: 12px;
       align-items:flex-start;
       padding: 12px 14px;
       border-radius: 16px;
       border: 1px solid rgba(43,32,26,.10);
       background: rgba(255,255,255,.62);
+    }
+    .bullets div::before{
+      content:"";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 5px;
+      background: rgba(184,147,106,.9);
+      flex: 0 0 10px;
     }
     .bullets b{ display:block; margin-bottom: 2px; }
 
@@ -502,15 +513,25 @@
       gap: 14px;
     }
     .review{
-      padding: 16px 16px;
+      padding: 16px;
       border-radius: 18px;
       border: 1px solid rgba(43,32,26,.10);
       background: rgba(255,255,255,.62);
       box-shadow: 0 12px 24px rgba(43,32,26,.07);
     }
-    .review .stars{ letter-spacing: .18em; color: #b7864f; font-weight: 900; font-size: 12px; }
-    .review p{ margin: 8px 0 10px; color: var(--muted); font-size: 13.6px; line-height: 1.7; }
-    .review .who{ font-weight: 800; font-size: 13px; color: var(--text); }
+    .review .stars{
+      color: rgba(184,147,106,.95);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .10em;
+    }
+    .review p{
+      margin: 8px 0 10px;
+      color: var(--muted);
+      font-size: 13.6px;
+      line-height: 1.7;
+    }
+    .review .who{ font-weight: 900; font-size: 13px; color: var(--text); }
     .review .city{ font-size: 12px; color: var(--muted); }
 
     /* Visit + Gallery */
@@ -594,17 +615,14 @@
     .gcard img{ width:100%; height:100%; object-fit: cover; transition: transform .35s ease; }
     .gcard:hover img{ transform: scale(1.06); }
 
-    /* Contact */
+    /* Contact form */
     .contact-grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap: 18px;
-      margin-top: 18px;
+      margin-top: 8px;
     }
-    .field{
-      display:grid;
-      gap: 8px;
-    }
+    .field{ display:grid; gap: 8px; }
     label{ font-size: 13px; font-weight: 800; color: #3b2c25; }
     input, textarea{
       border: 1px solid rgba(43,32,26,.14);
@@ -640,34 +658,38 @@
     }
     .footer-brand{ font-weight: 900; color: var(--text); letter-spacing: .02em; }
     .footer-info{ display:flex; gap: 16px; flex-wrap:wrap; }
+    .footer-info span::before{
+      content:"";
+      width: 6px; height: 6px;
+      border-radius: 999px;
+      background: rgba(184,147,106,.9);
+      display:inline-block;
+      margin-right: 8px;
+      transform: translateY(-1px);
+    }
 
-    /* WhatsApp floating */
-    .wa{
+    /* Floating CTA (no icon) */
+    .cta-float{
       position: fixed;
       right: 18px;
       bottom: 18px;
       z-index: 80;
-      display:flex;
-      gap: 10px;
+      display:inline-flex;
       align-items:center;
-      padding: 12px 14px;
+      padding: 12px 16px;
       border-radius: 999px;
-      background: rgba(16,185,129,.92);
-      color: #fff;
-      box-shadow: 0 18px 40px rgba(16,185,129,.28);
-      border: 1px solid rgba(255,255,255,.25);
-      transition: transform .2s ease, box-shadow .2s ease;
-    }
-    .wa:hover{ transform: translateY(-2px); box-shadow: 0 22px 52px rgba(16,185,129,.32); }
-    .wa .bubble{
-      width: 34px; height: 34px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.22);
-      display:grid;
-      place-items:center;
+      background: rgba(255,255,255,.82);
+      border: 1px solid rgba(43,32,26,.14);
+      box-shadow: 0 18px 40px rgba(43,32,26,.16);
       font-weight: 900;
+      letter-spacing: .03em;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
     }
-    .wa span{ font-weight: 900; letter-spacing: .03em; }
+    .cta-float:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.95);
+      box-shadow: 0 22px 52px rgba(43,32,26,.18);
+    }
 
     /* Responsive */
     @media (max-width: 980px){
@@ -680,7 +702,6 @@
       .visit-grid{ grid-template-columns: 1fr; }
       .gallery{ grid-template-columns: 1fr; }
       .gcard{ min-height: 220px; }
-      .topbar .row{ align-items:flex-start; }
       .contact-grid{ grid-template-columns: 1fr; }
       .mobile-nav.open{ display:block; }
     }
@@ -689,7 +710,7 @@
       .hero h2{ font-size: 32px; }
       .section-head h3{ font-size: 28px; }
       .panel, .visit-box{ padding: 22px; }
-      .wa span{ display:none; } /* mobile: icon only */
+      .cta-float{ right: 12px; bottom: 12px; padding: 10px 14px; }
     }
   </style>
 </head>
@@ -700,16 +721,12 @@
     <div class="container">
       <div class="row">
         <div class="left">
-          <span class="chip"><span class="dot"></span> Ouvert Tous les Jours • 07:00 — 20:00</span>
-          <span class="chip">📍 Centre-ville Libreville • Produits frais chaque matin</span>
+          <span class="chip"><span class="status-dot"></span> Ouvert Tous les Jours • 07:00 — 20:00</span>
+          <span class="chip">Centre-ville Libreville • Produits frais chaque matin</span>
         </div>
         <div class="right">
-          <a class="chip" href="#contact" aria-label="Appeler Bakery Gabon">📞 +241 01 23 45 67</a>
-          <div class="social" aria-label="Réseaux sociaux">
-            <span class="ico" title="Instagram" aria-hidden="true">📷</span>
-            <span class="ico" title="Facebook" aria-hidden="true">f</span>
-            <span class="ico" title="WhatsApp" aria-hidden="true">💬</span>
-          </div>
+          <a class="chip" href="#contact">+241 01 23 45 67</a>
+          <a class="chip" href="#contact">contact@bakery-gabon.com</a>
         </div>
       </div>
     </div>
@@ -759,14 +776,14 @@
     <div class="container">
       <div class="hero-card">
         <!-- floating images -->
-        <div class="float-img fi-1" style="--rot: 7deg;">
+        <div class="float-img fi-1">
           <img alt="Croissant doré" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=900&q=80">
         </div>
-        <div class="float-img fi-2" style="--rot: -8deg;">
+        <div class="float-img fi-2">
           <img alt="Croissants frais" src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80">
         </div>
-        <div class="float-img fi-3" style="--rot: -6deg;">
-          <img alt="Café artisanal" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80">
+        <div class="float-img fi-3">
+          <img alt="Café" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80">
         </div>
 
         <div class="hero-content">
@@ -774,7 +791,7 @@
           <h2>Fraîcheur Artisanale,<br>Chaque Jour.</h2>
           <p>
             Viennoiseries croustillantes, pains traditionnels et pâtisseries maison.
-            Des ingrédients de qualité et un savoir-faire authentique, pour le plaisir de tous.
+            Une qualité constante, un service rapide, et une boutique au centre-ville.
           </p>
 
           <div class="hero-cta">
@@ -782,10 +799,10 @@
             <a class="btn ghost" href="#menu">VOIR LE MENU</a>
           </div>
 
-          <div class="hero-meta" aria-label="Informations clés">
-            <span class="pill">⭐ 4.8/5 • Avis clients</span>
-            <span class="pill">🚚 Livraison • Centre-ville</span>
-            <span class="pill">🎂 Gâteaux sur mesure</span>
+          <div class="hero-meta">
+            <span class="pill">4.8 / 5</span>
+            <span class="pill">Livraison centre-ville</span>
+            <span class="pill">Gâteaux sur mesure</span>
           </div>
         </div>
       </div>
@@ -796,7 +813,7 @@
   <section id="menu">
     <div class="container">
       <div class="section-head">
-        <div class="badge">🍞 POURQUOI NOUS CHOISIR ?</div>
+        <div class="badge">POURQUOI NOUS CHOISIR</div>
         <h3>Un goût premium, une qualité constante</h3>
         <p>
           Préparé chaque matin, avec une attention particulière aux détails.
@@ -811,7 +828,7 @@
           </div>
           <div class="body">
             <h4>Pains Artisanaux</h4>
-            <p>Pains pétris à la main, mie moelleuse et croûte dorée. Idéal au petit-déj comme au dîner.</p>
+            <p>Pains pétris à la main, mie moelleuse et croûte dorée. Idéal au quotidien.</p>
             <a class="btn ghost" href="#order">Commander</a>
           </div>
         </article>
@@ -821,8 +838,8 @@
             <img alt="Viennoiseries" src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80">
           </div>
           <div class="body">
-            <h4>Viennoiseries Sucrées</h4>
-            <p>Croissants, pains au chocolat, brioches : feuilletage léger, goût beurré, plaisir garanti.</p>
+            <h4>Viennoiseries</h4>
+            <p>Croissants, pains au chocolat, brioches : feuilletage léger, plaisir garanti.</p>
             <a class="btn ghost" href="#order">Commander</a>
           </div>
         </article>
@@ -833,7 +850,7 @@
           </div>
           <div class="body">
             <h4>Gâteaux Sur Mesure</h4>
-            <p>Anniversaires, mariages, événements : on crée le gâteau parfait selon vos envies.</p>
+            <p>Anniversaires, mariages, événements : une création adaptée à vos envies.</p>
             <a class="btn ghost" href="#contact">Demander un devis</a>
           </div>
         </article>
@@ -841,14 +858,14 @@
     </div>
   </section>
 
-  <!-- ABOUT + TESTIMONIALS -->
+  <!-- ABOUT + REVIEWS -->
   <section id="about">
     <div class="container">
       <div class="section-head">
-        <div class="badge">🥐 À PROPOS</div>
+        <div class="badge">À PROPOS</div>
         <h3>Une boulangerie artisanale, pensée pour Libreville</h3>
         <p>
-          Un savoir-faire inspiré des classiques français, avec une touche locale.
+          Un savoir-faire inspiré des classiques, avec une touche locale.
           Objectif : vous servir vite, bien, et toujours frais.
         </p>
       </div>
@@ -860,18 +877,25 @@
             Chez <b>Bakery Gabon</b>, on mise sur des produits simples, maîtrisés, et délicieux.
             On privilégie la fraîcheur, la régularité et le service.
           </p>
+
           <div class="bullets">
             <div>
-              <span>✅</span>
-              <div><b>Préparation quotidienne</b><span style="color:var(--muted); font-size:13px;">Chaque matin, production fraîche.</span></div>
+              <div>
+                <b>Préparation quotidienne</b>
+                <span style="color:var(--muted); font-size:13px;">Chaque matin, production fraîche.</span>
+              </div>
             </div>
             <div>
-              <span>✅</span>
-              <div><b>Qualité des ingrédients</b><span style="color:var(--muted); font-size:13px;">Recettes équilibrées et constantes.</span></div>
+              <div>
+                <b>Qualité des ingrédients</b>
+                <span style="color:var(--muted); font-size:13px;">Recettes équilibrées et constantes.</span>
+              </div>
             </div>
             <div>
-              <span>✅</span>
-              <div><b>Commandes rapides</b><span style="color:var(--muted); font-size:13px;">WhatsApp / téléphone / sur place.</span></div>
+              <div>
+                <b>Commandes rapides</b>
+                <span style="color:var(--muted); font-size:13px;">Téléphone, message, ou sur place.</span>
+              </div>
             </div>
           </div>
         </div>
@@ -881,13 +905,13 @@
           <div class="reviews">
             <div class="review">
               <div class="stars">★★★★★</div>
-              <p>“Les croissants sont incroyables, et toujours frais. Service rapide !”</p>
+              <p>“Les croissants sont excellents et toujours frais. Service rapide.”</p>
               <div class="who">Nadine</div>
               <div class="city">Libreville</div>
             </div>
             <div class="review">
               <div class="stars">★★★★★</div>
-              <p>“J’ai commandé un gâteau d’anniversaire, le rendu était propre et très bon.”</p>
+              <p>“Gâteau d’anniversaire propre et très bon. Je recommande.”</p>
               <div class="who">Junior</div>
               <div class="city">Akanda</div>
             </div>
@@ -897,20 +921,20 @@
     </div>
   </section>
 
-  <!-- VISIT / ORDER + GALLERY -->
+  <!-- VISIT + GALLERY -->
   <section id="order">
     <div class="container">
       <div class="section-head">
-        <div class="badge">☕ VENEZ NOUS VOIR</div>
+        <div class="badge">BOUTIQUE</div>
         <h3>Visitez notre boutique</h3>
-        <p>Sur place ou à emporter : une pause gourmande au centre-ville, simple et efficace.</p>
+        <p>Sur place ou à emporter : une pause gourmande au centre-ville.</p>
       </div>
 
       <div class="visit-grid">
         <div class="visit-box">
-          <h4>Une pause gourmande à Libreville</h4>
+          <h4>Une pause gourmande au centre-ville</h4>
           <p>
-            Passez à notre boutique du centre-ville, savourez sur place ou emportez vos produits préférés.
+            Passez à notre boutique, savourez sur place ou emportez.
             Chaque matin : pains, viennoiseries et pâtisseries.
           </p>
           <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 8px;">
@@ -919,25 +943,25 @@
           </div>
         </div>
 
-        <div class="visit-photos" aria-label="Photos boutique">
+        <div class="visit-photos">
           <div class="photo">
-            <img alt="Donuts colorés" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80">
+            <img alt="Produits" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80">
           </div>
           <div class="photo">
-            <img alt="Tarte aux fruits" src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=1200&q=80">
+            <img alt="Produits" src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=1200&q=80">
           </div>
         </div>
       </div>
 
       <div class="gallery" id="gallery" aria-label="Galerie produits">
         <div class="gcard">
-          <img alt="Dessert gourmand" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80">
+          <img alt="Produit" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80">
         </div>
         <div class="gcard">
-          <img alt="Biscuits maison" src="https://images.unsplash.com/photo-1548946526-f69e2424cf45?auto=format&fit=crop&w=1200&q=80">
+          <img alt="Produit" src="https://images.unsplash.com/photo-1548946526-f69e2424cf45?auto=format&fit=crop&w=1200&q=80">
         </div>
         <div class="gcard">
-          <img alt="Gâteau à la crème" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1400&q=80">
+          <img alt="Produit" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1400&q=80">
         </div>
       </div>
     </div>
@@ -947,30 +971,20 @@
   <section id="contact">
     <div class="container">
       <div class="section-head">
-        <div class="badge">📩 CONTACT</div>
+        <div class="badge">CONTACT</div>
         <h3>Commandes & devis</h3>
-        <p>Un gâteau sur mesure ? Une commande ? Écris-nous, on répond rapidement.</p>
+        <p>Un gâteau sur mesure ? Une commande ? Écrivez-nous.</p>
       </div>
 
       <div class="split">
         <div class="panel">
-          <h4>Infos</h4>
+          <h4>Informations</h4>
           <p>
             <b>Adresse :</b> Centre-ville, Libreville<br>
             <b>Téléphone :</b> +241 01 23 45 67<br>
             <b>Email :</b> contact@bakery-gabon.com<br>
             <b>Horaires :</b> Lun-Dim • 07h00 — 20h00
           </p>
-          <div class="bullets">
-            <div>
-              <span>📦</span>
-              <div><b>Commande rapide</b><span style="color:var(--muted); font-size:13px;">WhatsApp ou téléphone.</span></div>
-            </div>
-            <div>
-              <span>🎂</span>
-              <div><b>Gâteaux sur mesure</b><span style="color:var(--muted); font-size:13px;">Décris le thème + nombre de parts.</span></div>
-            </div>
-          </div>
         </div>
 
         <div class="panel">
@@ -1000,7 +1014,7 @@
 
             <div style="display:flex; gap:12px; flex-wrap:wrap; margin-top: 16px;">
               <button class="btn primary" type="submit">ENVOYER</button>
-              <a class="btn ghost" href="#order">RETOUR</a>
+              <a class="btn ghost" href="#top">RETOUR</a>
             </div>
           </form>
         </div>
@@ -1014,19 +1028,16 @@
       <div class="footer-content">
         <div class="footer-brand"><strong>BAKERY GABON</strong> — Fraîcheur artisanale au cœur de Libreville</div>
         <div class="footer-info">
-          <span>📍 Centre-ville</span>
-          <span>📞 +241 01 23 45 67</span>
-          <span>🕐 Lun-Dim 07h-20h</span>
+          <span>Centre-ville</span>
+          <span>+241 01 23 45 67</span>
+          <span>Lun-Dim 07h-20h</span>
         </div>
       </div>
     </div>
   </footer>
 
-  <!-- WhatsApp floating CTA -->
-  <a class="wa" href="https://wa.me/24101234567" target="_blank" rel="noopener" aria-label="Commander sur WhatsApp">
-    <div class="bubble">WA</div>
-    <span>Commander sur WhatsApp</span>
-  </a>
+  <!-- Floating CTA (no icon) -->
+  <a class="cta-float" href="#contact">Commander</a>
 
   <script>
     // Mobile menu
@@ -1039,7 +1050,6 @@
         burger.setAttribute('aria-expanded', String(isOpen));
       });
 
-      // Close menu after click
       mobileNav.querySelectorAll('a').forEach(a => {
         a.addEventListener('click', () => {
           mobileNav.classList.remove('open');
