@@ -1,19 +1,27 @@
-name: Docker Release
+name: Docker Build & Push
+
 on:
-  release:
-    types: [published]
+  push:
+    branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   push-to-hub:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/login-action@v3
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔐 Login Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - uses: docker/build-push-action@v5
+
+      - name: 🐳 Build & Push Docker Image
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/projet_devOPs:${{ github.event.release.tag_name }}
+          tags: ${{ secrets.DOCKER_USERNAME }}/projet_devOPs:latest
