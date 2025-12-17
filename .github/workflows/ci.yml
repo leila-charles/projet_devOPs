@@ -13,6 +13,6 @@ jobs:
       - name: 🧪 Installation et Tests
         run: |
           sudo npm install -g htmlhint
-          htmlhint src/index.html
+          htmlhint docs/index.html
 
       # (On ajoutera le déploiement ici à l'étape 5)
