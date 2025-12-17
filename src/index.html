@@ -1,12 +1,814 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projet DevOps</title>
-  </head>
-  <body>
-    <h1>Site DevOps de Benoît</h1>
-    <p>Déploiement automatique réussi ! 🚀</p>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bakery Gabon — Pâtisserie Artisanale</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* PALETTE */
+    :root{
+      --bg-global: #FFF8F0;
+      --surface: #FFFFFF;
+      --surface-alt: #FFE8D6;
+      --text-primary: #2D1B0E;
+      --text-secondary: #6B5847;
+      --border: #E8D4C0;
+      --brand: #D2691E;
+      --brand-hover: #B85A15;
+      --accent: #8B4513;
+    }
+
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+    html{ scroll-behavior: smooth; }
+    html,body{ height:100%; }
+    body{
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--text-primary);
+      background: var(--bg-global);
+      line-height: 1.6;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    button{ font-family: inherit; }
+    img{ max-width: 100%; display: block; }
+
+    .container{
+      width: min(1200px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Top bar */
+    .topbar{
+      padding: 12px 0;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+    .topbar .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 16px;
+    }
+    .topbar .left, .topbar .right{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .dot{
+      width: 6px; 
+      height: 6px; 
+      border-radius: 50%;
+      background: #22c55e;
+      display:inline-block;
+    }
+    .social{
+      display:flex; 
+      align-items:center; 
+      gap: 12px;
+    }
+    .ico{
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 18px 0;
+      gap: 16px;
+    }
+    .brand h1{
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: .08em;
+    }
+    .brand small{
+      display:block;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    nav{
+      display:flex;
+      gap: 32px;
+      align-items:center;
+      justify-content:center;
+      flex: 1;
+    }
+    nav a{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      padding: 8px 0;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    nav a:hover{
+      color: var(--brand);
+    }
+    nav a.active{
+      color: var(--brand);
+      border-bottom-color: var(--brand);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 8px;
+      border: 0;
+      cursor:pointer;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+    }
+    .btn:active{
+      transform: translateY(0);
+    }
+    .btn.primary{
+      background: var(--brand);
+      color: var(--surface);
+    }
+    .btn.primary:hover{
+      background: var(--brand-hover);
+    }
+    .btn.ghost{
+      background: var(--surface);
+      border: 1px solid var(--brand);
+      color: var(--brand);
+    }
+    .btn.ghost:hover{
+      background: var(--brand);
+      color: var(--surface);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 60px 0 40px;
+      background: var(--bg-global);
+    }
+    .hero-card{
+      position: relative;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+      min-height: 450px;
+      border: 1px solid var(--border);
+    }
+
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: var(--surface);
+      opacity: 0.95;
+      z-index: 0;
+    }
+
+    .hero-bg{
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-bg img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+    }
+
+    .float-img{
+      position:absolute;
+      border-radius: 8px;
+      overflow:hidden;
+      box-shadow: 0 4px 12px #00000018;
+      border: 2px solid var(--surface);
+      z-index: 1;
+    }
+    .float-img img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    .fi-1{
+      width: 240px; 
+      height: 180px;
+      right: 70px; 
+      top: 60px;
+    }
+    .fi-2{
+      width: 260px; 
+      height: 200px;
+      right: 40px; 
+      bottom: 50px;
+    }
+    .fi-3{
+      width: 200px; 
+      height: 150px;
+      left: 40px; 
+      top: 80px;
+    }
+
+    .hero-content{
+      position: relative;
+      z-index: 2;
+      padding: 70px 50px;
+      max-width: 580px;
+    }
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .hero h2{
+      margin: 0 0 18px;
+      font-size: 44px;
+      line-height: 1.1;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .hero p{
+      margin: 0 0 24px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* Sections */
+    section{
+      padding: 50px 0;
+    }
+    section:nth-child(odd){
+      background: var(--bg-global);
+    }
+    section:nth-child(even){
+      background: var(--surface);
+    }
+    .section-head{
+      text-align:center;
+      margin-bottom: 40px;
+    }
+    .section-head .badge{
+      display:inline-block;
+      margin-bottom: 12px;
+      color: var(--brand);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
+    .section-head h3{
+      margin: 0 0 12px;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+    }
+    .section-head p{
+      margin: 0 auto;
+      color: var(--text-secondary);
+      max-width: 65ch;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .card{
+      border-radius: 8px;
+      overflow:hidden;
+      background: var(--surface);
+      box-shadow: 0 2px 8px #00000010;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .card:hover{
+      box-shadow: 0 4px 16px #00000018;
+      transform: translateY(-2px);
+    }
+    
+    .card .img{
+      height: 200px;
+      background: var(--surface-alt);
+      border-bottom: 1px solid var(--border);
+    }
+    .card .img img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .card .body{
+      padding: 24px;
+      text-align:center;
+    }
+    .card h4{
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .card p{
+      margin: 0 0 18px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Visit section */
+    .visit{
+      background: var(--surface-alt);
+    }
+    .visit-grid{
+      display:grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .visit-box{
+      border-radius: 8px;
+      background: var(--surface);
+      padding: 36px;
+      box-shadow: 0 2px 8px #00000010;
+      border: 1px solid var(--border);
+    }
+    .visit-box h4{
+      margin: 0 0 14px;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .visit-box p{
+      margin: 0 0 22px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .visit-photos{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .photo{
+      border-radius: 8px;
+      overflow:hidden;
+      background: var(--surface-alt);
+      height: 140px;
+      box-shadow: 0 2px 8px #00000010;
+      border: 1px solid var(--border);
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    /* Gallery */
+    .gallery{
+      margin-top: 24px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      gap: 20px;
+    }
+    .gcard{
+      border-radius: 8px;
+      overflow:hidden;
+      background: var(--surface-alt);
+      min-height: 240px;
+      box-shadow: 0 2px 8px #00000010;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .gcard:hover{
+      box-shadow: 0 4px 16px #00000018;
+      transform: translateY(-2px);
+    }
+    
+    .gcard img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    /* Footer */
+    footer{
+      padding: 36px 0;
+      color: var(--text-secondary);
+      background: var(--surface-alt);
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+    }
+    .footer-content{
+      display:flex;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      align-items: center;
+    }
+    .footer-brand{
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--accent);
+    }
+    .footer-info{
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .container{
+        width: calc(100% - 32px);
+      }
+      
+      nav{ display:none; }
+      
+      .header-inner{
+        padding: 14px 0;
+      }
+      
+      .brand h1{
+        font-size: 24px;
+      }
+      
+      .brand small{
+        font-size: 11px;
+      }
+      
+      .hero{
+        padding: 40px 0 30px;
+      }
+      
+      .hero-card{
+        min-height: 380px;
+      }
+      
+      .hero-content{ 
+        padding: 40px 28px; 
+        max-width: 100%; 
+      }
+      
+      .fi-1, .fi-2, .fi-3{ display:none; }
+      
+      .hero h2{ 
+        font-size: 32px; 
+        margin-bottom: 14px;
+      }
+      
+      .hero p{
+        font-size: 14px;
+      }
+      
+      section{
+        padding: 40px 0;
+      }
+      
+      .section-head{
+        margin-bottom: 30px;
+      }
+      
+      .section-head h3{ 
+        font-size: 28px; 
+      }
+      
+      .cards{ 
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .visit-grid{ 
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .visit-box{
+        padding: 28px;
+      }
+      
+      .visit-box h4{
+        font-size: 24px;
+      }
+      
+      .visit-photos{ 
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      
+      .gallery{ 
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      
+      .gcard{
+        min-height: 200px;
+      }
+      
+      .topbar .row{ 
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 12px;
+      }
+      
+      .topbar .left,
+      .topbar .right{
+        width: 100%;
+        gap: 12px;
+      }
+      
+      .footer-content{ 
+        flex-direction: column; 
+        align-items: flex-start;
+        gap: 16px;
+      }
+      
+      .footer-info{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+    }
+    
+    @media (max-width: 640px){
+      .container{
+        width: calc(100% - 24px);
+      }
+      
+      .topbar{
+        padding: 10px 0;
+        font-size: 12px;
+      }
+      
+      .chip{
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+      
+      .brand h1{
+        font-size: 22px;
+      }
+      
+      .btn{
+        padding: 10px 20px;
+        font-size: 13px;
+      }
+      
+      .hero-card{
+        min-height: 320px;
+      }
+      
+      .hero-content{
+        padding: 32px 20px;
+      }
+      
+      .kicker{
+        font-size: 10px;
+        margin-bottom: 12px;
+      }
+      
+      .hero h2{
+        font-size: 26px;
+      }
+      
+      .hero p{
+        font-size: 13px;
+        margin-bottom: 20px;
+      }
+      
+      .section-head .badge{
+        font-size: 11px;
+        padding: 8px 16px;
+      }
+      
+      .section-head h3{
+        font-size: 24px;
+      }
+      
+      .section-head p{
+        font-size: 13px;
+      }
+      
+      .card .body{
+        padding: 20px;
+      }
+      
+      .card h4{
+        font-size: 18px;
+      }
+      
+      .card p{
+        font-size: 13px;
+      }
+      
+      .visit-box{
+        padding: 24px;
+      }
+      
+      .visit-box h4{
+        font-size: 22px;
+      }
+      
+      .visit-box p{
+        font-size: 13px;
+      }
+      
+      .visit-photos{
+        grid-template-columns: 1fr;
+      }
+      
+      .photo{
+        min-height: 160px;
+      }
+      
+      footer{
+        padding: 28px 0;
+        font-size: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="left">
+          <span class="chip"><span class="dot"></span> Ouvert Tous les Jours • 07:00 — 20:00</span>
+          <span class="chip">📍 Centre-ville Libreville</span>
+        </div>
+        <div class="right">
+          <span class="chip">📞 +241 01 23 45 67</span>
+          <div class="social">
+            <span class="ico">Instagram</span>
+            <span class="ico">Facebook</span>
+            <span class="ico">WhatsApp</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">
+          <h1>BAKERY</h1>
+          <small>Boulangerie artisanale à Libreville</small>
+        </div>
+
+        <nav aria-label="Navigation principale">
+          <a class="active" href="#">Accueil</a>
+          <a href="#menu">Menu</a>
+          <a href="#about">À propos</a>
+          <a href="#gallery">Galerie</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <a class="btn primary" href="#order">Commander</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="hero-bg">
+          <img alt="Fond boulangerie" src="https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2400&q=80">
+        </div>
+        
+        <div class="float-img fi-1">
+          <img alt="Croissant" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=900&q=80">
+        </div>
+        <div class="float-img fi-2">
+          <img alt="Viennoiseries" src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80">
+        </div>
+        
+        <div class="hero-content">
+          <div class="kicker">Nos meilleurs produits</div>
+          <h2>Du pain frais tous les jours</h2>
+          <p>
+            Viennoiseries croustillantes, pains traditionnels et pâtisseries faites maison. 
+            Des ingrédients de qualité pour le plaisir de tous les Gabonais.
+          </p>
+          <a class="btn primary" href="#order">Commander maintenant</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- WHY CHOOSE US -->
+  <section id="menu">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">🍞 Pourquoi nous choisir</div>
+        <h3>Nos Spécialités</h3>
+        <p>
+          Des produits frais préparés chaque matin avec soin et passion.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="img">
+            <img alt="Pains artisanaux" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Pains Artisanaux</h4>
+            <p>Pains pétris à la main, cuisson traditionnelle, mie moelleuse.</p>
+            <a class="btn ghost" href="#menu">Voir le menu</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img">
+            <img alt="Viennoiseries" src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Viennoiseries</h4>
+            <p>Croissants, pains au chocolat et brioches préparés chaque matin.</p>
+            <a class="btn ghost" href="#menu">Voir le menu</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img">
+            <img alt="Gâteaux" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Gâteaux</h4>
+            <p>Gâteaux personnalisés pour vos événements et célébrations.</p>
+            <a class="btn ghost" href="#contact">Commander</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT US TODAY -->
+ 
+
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          Bakery Gabon — Boulangerie artisanale
+        </div>
+        <div class="footer-info">
+          <span>📍 Centre-ville, Libreville</span>
+          <span>📞 +241 01 23 45 67</span>
+          <span>✉️ contact@bakery-gabon.com</span>
+          <span>Lun-Dim: 07h-20h</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
