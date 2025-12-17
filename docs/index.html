@@ -1,12 +1,615 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Projet DevOps</title>
-  </head>
-  <body>
-    <h1>Site DevOps de Benoît</h1>
-    <p>Déploiement autoffmatiqueollll ! 🚀</p>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bakery — Accueil</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #F6EFE6;
+      --surface: #F2E7DA;
+      --surface-2: #EFE2D3;
+      --text: #2B201A;
+      --muted: #6A5B52;
+      --line: rgba(43,32,26,.12);
+      --brand: #7B4B33;
+      --brand-2: #9A6A52;
+      --white: #ffffff;
+      --shadow: 0 18px 50px rgba(43,32,26,.12);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --container: 1120px;
+    }
+
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #F8F1E8 0%, var(--bg) 55%, #F7F0E7 100%);
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    button{ font-family: inherit; }
+
+    /* Layout */
+    .container{
+      width: min(var(--container), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    /* Top mini bar */
+    .topbar{
+      padding: 10px 0;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .topbar .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .topbar .left, .topbar .right{
+      display:flex;
+      align-items:center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.45);
+      backdrop-filter: blur(8px);
+    }
+    .dot{
+      width: 6px; height: 6px; border-radius: 99px;
+      background: var(--brand);
+      display:inline-block;
+    }
+    .social{
+      display:flex; align-items:center; gap: 8px;
+    }
+    .ico{
+      width: 30px; height: 30px;
+      display:grid; place-items:center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,.45);
+    }
+
+    /* Header */
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(248,241,232,.72);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 0;
+      gap: 12px;
+    }
+    .brand{
+      display:flex;
+      align-items:baseline;
+      gap: 10px;
+      min-width: 190px;
+    }
+    .brand h1{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: .12em;
+      font-weight: 900;
+    }
+    .brand small{
+      display:block;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      letter-spacing: .06em;
+    }
+    nav{
+      display:flex;
+      gap: 26px;
+      align-items:center;
+      justify-content:center;
+      flex: 1;
+    }
+    nav a{
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      color: #3b2c25;
+      opacity: .9;
+      padding: 10px 2px;
+      position: relative;
+    }
+    nav a:hover{ opacity: 1; }
+    nav a.active::after{
+      content:"";
+      position:absolute;
+      left: 0;
+      right: 0;
+      bottom: 6px;
+      height: 2px;
+      border-radius: 999px;
+      background: rgba(123,75,51,.45);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      border: 0;
+      cursor:pointer;
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .06em;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      white-space: nowrap;
+    }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{
+      background: linear-gradient(180deg, var(--brand-2), var(--brand));
+      color: #fff;
+      box-shadow: 0 14px 30px rgba(123,75,51,.28);
+    }
+    .btn.primary:hover{ box-shadow: 0 18px 34px rgba(123,75,51,.32); }
+    .btn.ghost{
+      background: rgba(255,255,255,.55);
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 22px 0 10px;
+    }
+    .hero-card{
+      position: relative;
+      border-radius: calc(var(--radius) + 6px);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(43,32,26,.10);
+      background: #efe4d6;
+      min-height: 420px;
+    }
+
+    /* Background image */
+    .hero-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(900px 500px at 20% 50%, rgba(246,239,230,.65) 0%, rgba(246,239,230,.25) 48%, rgba(246,239,230,0) 70%),
+        linear-gradient(90deg, rgba(246,239,230,.92) 0%, rgba(246,239,230,.70) 35%, rgba(246,239,230,.0) 65%),
+        url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=2400&q=80");
+      background-size: cover;
+      background-position: center;
+      filter: saturate(1.02) contrast(1.02);
+      transform: scale(1.02);
+    }
+
+    /* Decorative pastry images like screenshot */
+    .float-img{
+      position:absolute;
+      border-radius: 22px;
+      overflow:hidden;
+      box-shadow: 0 18px 35px rgba(43,32,26,.18);
+      border: 1px solid rgba(255,255,255,.55);
+    }
+    .float-img img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display:block;
+    }
+    .fi-1{
+      width: 230px; height: 170px;
+      right: 70px; top: 40px;
+      transform: rotate(6deg);
+    }
+    .fi-2{
+      width: 260px; height: 190px;
+      right: 36px; bottom: 34px;
+      transform: rotate(-7deg);
+    }
+    .fi-3{
+      width: 190px; height: 145px;
+      left: 44px; top: 78px;
+      transform: rotate(-5deg);
+      opacity:.95;
+    }
+
+    .hero-content{
+      position: relative;
+      z-index: 2;
+      padding: 70px 60px;
+      max-width: 560px;
+    }
+    .kicker{
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+    .hero h2{
+      margin: 0 0 14px;
+      font-size: clamp(34px, 4.2vw, 46px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      font-weight: 900;
+    }
+    .hero p{
+      margin: 0 0 22px;
+      color: #5f5048;
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 48ch;
+    }
+
+    /* Section title */
+    section{
+      padding: 40px 0;
+    }
+    .section-head{
+      text-align:center;
+      margin-bottom: 22px;
+    }
+    .section-head .badge{
+      display:inline-flex;
+      gap: 10px;
+      align-items:center;
+      margin-bottom: 10px;
+      color: var(--brand);
+      font-weight: 800;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      font-size: 11px;
+    }
+    .section-head h3{
+      margin: 0;
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+    .section-head p{
+      margin: 10px auto 0;
+      color: var(--muted);
+      max-width: 70ch;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    /* Cards */
+    .cards{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 20px;
+    }
+    .card{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.42);
+      box-shadow: 0 10px 28px rgba(43,32,26,.08);
+    }
+    .card .img{
+      height: 170px;
+      background: #ddd;
+    }
+    .card .img img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+    .card .body{
+      padding: 18px 18px 20px;
+      text-align:center;
+    }
+    .card h4{
+      margin: 6px 0 8px;
+      font-size: 16px;
+      font-weight: 900;
+      letter-spacing: -0.01em;
+    }
+    .card p{
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 12.5px;
+      line-height: 1.65;
+    }
+
+    /* Visit section */
+    .visit{
+      padding-top: 10px;
+    }
+    .visit-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      align-items: stretch;
+      margin-top: 22px;
+    }
+    .visit-box{
+      border-radius: calc(var(--radius) + 6px);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.38);
+      box-shadow: 0 12px 34px rgba(43,32,26,.10);
+      overflow:hidden;
+      padding: 24px;
+    }
+    .visit-box h4{
+      margin: 0 0 10px;
+      font-size: 22px;
+      font-weight: 900;
+    }
+    .visit-box p{
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+      max-width: 62ch;
+    }
+    .visit-photos{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .photo{
+      border-radius: var(--radius-sm);
+      overflow:hidden;
+      border: 1px solid var(--line);
+      background: #eee;
+      box-shadow: 0 12px 28px rgba(43,32,26,.10);
+      min-height: 160px;
+    }
+    .photo img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    /* Bottom gallery (like screenshot: 2 small + 1 big) */
+    .gallery{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 1fr 1fr 1.5fr;
+      gap: 14px;
+      align-items: stretch;
+    }
+    .gcard{
+      border-radius: var(--radius);
+      overflow:hidden;
+      border: 1px solid var(--line);
+      background: #eee;
+      box-shadow: 0 14px 32px rgba(43,32,26,.10);
+      min-height: 220px;
+    }
+    .gcard img{
+      width:100%;
+      height:100%;
+      object-fit: cover;
+      display:block;
+    }
+
+    footer{
+      padding: 26px 0 38px;
+      color: var(--muted);
+      font-size: 12px;
+      border-top: 1px solid var(--line);
+      margin-top: 26px;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      nav{ display:none; }
+      .hero-content{ padding: 52px 26px; max-width: 620px; }
+      .fi-1, .fi-2, .fi-3{ display:none; }
+      .cards{ grid-template-columns: 1fr; }
+      .visit-grid{ grid-template-columns: 1fr; }
+      .gallery{ grid-template-columns: 1fr; }
+      .gcard{ min-height: 200px; }
+      .brand{ min-width:auto; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div class="left">
+          <span class="chip"><span class="dot"></span> Open Daily • 07:00 — 20:00</span>
+          <span class="chip">📍 Downtown • Fresh pastries every morning</span>
+        </div>
+        <div class="right">
+          <span class="chip">📞 +33 6 00 00 00 00</span>
+          <div class="social">
+            <span class="ico" title="Instagram">⌁</span>
+            <span class="ico" title="X">𝕏</span>
+            <span class="ico" title="Facebook">f</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="header-inner">
+        <div class="brand">
+          <div>
+            <h1>BAKERY</h1>
+            <small>Delicious baked, just for you</small>
+          </div>
+        </div>
+
+        <nav aria-label="Navigation principale">
+          <a class="active" href="#">HOME</a>
+          <a href="#">MENU</a>
+          <a href="#">ABOUT</a>
+          <a href="#">BLOG</a>
+          <a href="#">CONTACT US</a>
+        </nav>
+
+        <a class="btn primary" href="#order">ORDER NOW</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <!-- floating images (optionnel) -->
+        <div class="float-img fi-1">
+          <img alt="Croissant" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=900&q=80">
+        </div>
+        <div class="float-img fi-2">
+          <img alt="Croissant sur planche" src="https://images.unsplash.com/photo-1530610476181-d83430b64dcd?auto=format&fit=crop&w=900&q=80">
+        </div>
+        <div class="float-img fi-3">
+          <img alt="Café" src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80">
+        </div>
+
+        <div class="hero-content">
+          <div class="kicker">THE BEST OF OUR BAKED PRODUCTS</div>
+          <h2>Freshly Baked,<br>Just for You!</h2>
+          <p>
+            Découvrez des viennoiseries croustillantes, des pains artisanaux et des pâtisseries
+            faites maison. Des ingrédients simples, un goût authentique, chaque jour.
+          </p>
+          <a class="btn primary" href="#order">ORDER NOW</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- WHY CHOOSE US -->
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">🍞 WHY CHOOSE US?</div>
+        <h3>Why Choose Us?</h3>
+        <p>
+          Des produits frais, une fabrication artisanale, et une attention particulière aux détails.
+          Tout est pensé pour une expérience gourmande et régulière.
+        </p>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="img">
+            <img alt="Pain artisanal" src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Artisan Breads</h4>
+            <p>Des pains pétris avec soin, cuisson maîtrisée, mie moelleuse et croûte dorée.</p>
+            <a class="btn ghost" href="#menu">View Menu</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img">
+            <img alt="Viennoiseries" src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Sweet Pastries</h4>
+            <p>Feuilletage léger, crème onctueuse, fruits frais : un plaisir simple et efficace.</p>
+            <a class="btn ghost" href="#menu">View Menu</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img">
+            <img alt="Gâteau" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="body">
+            <h4>Custom Cakes</h4>
+            <p>Anniversaire, événement, commande spéciale : on s’adapte à votre envie.</p>
+            <a class="btn ghost" href="#contact">Visit & Order</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISIT US TODAY -->
+  <section class="visit" id="order">
+    <div class="container">
+      <div class="section-head">
+        <div class="badge">☕ VISIT US TODAY</div>
+        <h3>Visit Us Today</h3>
+      </div>
+
+      <div class="visit-grid">
+        <div class="visit-box">
+          <h4>Une pause gourmande, sans attendre</h4>
+          <p>
+            Passez à la boutique, dégustez sur place ou emportez. Chaque matin, nous préparons
+            une sélection de pains, de viennoiseries et de pâtisseries inspirées des classiques.
+          </p>
+          <a class="btn primary" href="#contact">VISIT US TODAY</a>
+        </div>
+
+        <div class="visit-photos">
+          <div class="photo">
+            <img alt="Donuts" src="https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80">
+          </div>
+          <div class="photo">
+            <img alt="Tarte" src="https://images.unsplash.com/photo-1505253716362-afaea1d3d1af?auto=format&fit=crop&w=1200&q=80">
+          </div>
+        </div>
+      </div>
+
+      <div class="gallery" aria-label="Galerie produits">
+        <div class="gcard">
+          <img alt="Dessert" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=1200&q=80">
+        </div>
+        <div class="gcard">
+          <img alt="Biscuits" src="https://images.unsplash.com/photo-1548946526-f69e2424cf45?auto=format&fit=crop&w=1200&q=80">
+        </div>
+        <div class="gcard">
+          <img alt="Gâteau crème" src="https://images.unsplash.com/photo-1542826438-bd32f43d626f?auto=format&fit=crop&w=1400&q=80">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;">
+        <div><strong>BAKERY</strong> — Freshly baked, just for you.</div>
+        <div>📍 Downtown • 📞 +33 6 00 00 00 00 • ✉️ contact@bakery.com</div>
+      </div>
+    </div>
+  </footer>
+</body>
 </html>
